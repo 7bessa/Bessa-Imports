@@ -12,7 +12,7 @@ function doGet() {
 
 function listarProdutosAdmin() {
   const sheetInfo = obterPlanilha_();
-  const values = sheetInfo.sheet.getDataRange().getValues();
+  const values = lerLinhasCatalogo_(sheetInfo);
 
   return values.slice(1)
     .filter(function(row) {
@@ -43,7 +43,7 @@ function adicionarProdutoAdmin(dados) {
 
   try {
     const sheetInfo = obterPlanilha_();
-    const values = sheetInfo.sheet.getDataRange().getValues();
+    const values = lerLinhasCatalogo_(sheetInfo);
     const ids = values.slice(1)
       .map(function(row) { return Number(row[sheetInfo.columns.id]); })
       .filter(function(id) { return Number.isFinite(id); });
@@ -67,7 +67,11 @@ function adicionarProdutoAdmin(dados) {
     newRow[sheetInfo.columns.lancamento] = produto.lancamento;
     newRow[sheetInfo.columns.maisVendido] = produto.maisVendido;
 
-    sheetInfo.sheet.appendRow(newRow);
+    if (sheetInfo.csvStorage) {
+      sheetInfo.sheet.appendRow([serializarCSVAdmin_(newRow)]);
+    } else {
+      sheetInfo.sheet.appendRow(newRow);
+    }
     SpreadsheetApp.flush();
 
     return { id: id, nome: produto.nome };
@@ -86,7 +90,20 @@ function obterPlanilha_() {
     throw new Error('A planilha está vazia. Importe primeiro os cabeçalhos e produtos do catálogo.');
   }
 
-  const headers = sheet.getRange(1, 1, 1, lastColumn).getDisplayValues()[0];
+  let csvStorage = false;
+  let rows = sheet.getDataRange().getValues();
+  if (lastColumn === 1) {
+    const csvText = rows.map(function(row) { return String(row[0] || ''); }).join('\n');
+    const parsed = parseCSVAdmin_(csvText);
+    if (parsed.length && parsed[0].length > 1) {
+      rows = parsed;
+      csvStorage = true;
+    }
+  }
+
+  const headers = csvStorage
+    ? rows[0]
+    : sheet.getRange(1, 1, 1, lastColumn).getDisplayValues()[0];
   const positions = {};
   headers.forEach(function(header, index) {
     positions[normalizarCabecalho_(header)] = index;
@@ -100,9 +117,65 @@ function obterPlanilha_() {
       columns[name] = positions[key];
     });
 
-  return { sheet: sheet, columns: columns, lastColumn: lastColumn };
+  return { sheet: sheet, columns: columns, lastColumn: csvStorage ? headers.length : lastColumn, csvStorage: csvStorage };
 }
 
+function lerLinhasCatalogo_(sheetInfo) {
+  if (sheetInfo.csvStorage) {
+    const cells = sheetInfo.sheet.getDataRange().getDisplayValues();
+    return parseCSVAdmin_(cells.map(function(row) { return String(row[0] || ''); }).join('\n'));
+  }
+  return sheetInfo.sheet.getDataRange().getValues();
+}
+
+function parseCSVAdmin_(texto) {
+  const linhas = [];
+  let campo = '';
+  let linha = [];
+  let dentroAspas = false;
+
+  for (let i = 0; i < texto.length; i++) {
+    const caractere = texto[i];
+    if (dentroAspas) {
+      if (caractere === '"') {
+        if (texto[i + 1] === '"') {
+          campo += '"';
+          i++;
+        } else {
+          dentroAspas = false;
+        }
+      } else {
+        campo += caractere;
+      }
+    } else if (caractere === '"') {
+      dentroAspas = true;
+    } else if (caractere === ',') {
+      linha.push(campo);
+      campo = '';
+    } else if (caractere === '\n' || caractere === '\r') {
+      if (caractere === '\r' && texto[i + 1] === '\n') i++;
+      linha.push(campo);
+      campo = '';
+      if (linha.length > 1 || linha[0] !== '') linhas.push(linha);
+      linha = [];
+    } else {
+      campo += caractere;
+    }
+  }
+
+  if (campo.length || linha.length) {
+    linha.push(campo);
+    linhas.push(linha);
+  }
+  return linhas;
+}
+
+function serializarCSVAdmin_(valores) {
+  return valores.map(function(valor) {
+    const texto = String(valor == null ? '' : valor);
+    return /[",\r\n]/.test(texto) ? '"' + texto.replace(/"/g, '""') + '"' : texto;
+  }).join(',');
+}
 function validarProduto_(dados) {
   if (!dados || typeof dados !== 'object') throw new Error('Confira os dados da peça e tente novamente.');
 

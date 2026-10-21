@@ -51,6 +51,10 @@ function parseCSV(texto){
 // ----- Converte as linhas da planilha no mesmo formato que o site já usa -----
 function linhasParaProdutos(linhas){
   if (!linhas.length) return [];
+  // Também aceita planilhas em que cada linha CSV foi importada numa única célula.
+  if (linhas.every(linha => linha.length === 1)){
+    linhas = parseCSV(linhas.map(linha => linha[0]).join('\n'));
+  }
   const cabecalho = linhas[0].map(h => h.trim().toLowerCase());
   const col = nome => cabecalho.indexOf(nome);
   const ehVerdadeiro = v => /^(true|verdadeiro|sim|1|x)$/i.test((v || '').trim());
@@ -94,7 +98,10 @@ const produtosProntos = (window.__produtosPreCarregados
     : (PLANILHA_CSV_URL.startsWith('http')
         ? fetch(PLANILHA_CSV_URL)
             .then(resposta => resposta.text())
-            .then(texto => linhasParaProdutos(parseCSV(texto)))
+            .then(texto => {
+              const catalogo = linhasParaProdutos(parseCSV(texto));
+              return catalogo.length ? catalogo : carregarDoJsonLocal();
+            })
             .catch(erro => {
               console.error('Não foi possível carregar a planilha, usando produtos.json como backup:', erro);
               return carregarDoJsonLocal();

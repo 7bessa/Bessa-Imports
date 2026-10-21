@@ -1,0 +1,13 @@
+id,nome,slug,categoria,precoAntigo,preco,img,cores,tamanhos,lancamento,maisVendido
+1,Camisa Oxford,camisa-oxford,camisa,249.9,179.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Camisa+Oxford,Branco:#f2f2f0|Azul:#2b4a7a|Listrado:#9a9a95,"P,M,G,GG",FALSE,TRUE
+2,Calça Chino,calca-chino,calca,229.9,169.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Calça+Chino,Bege:#c9b48a|Preto:#0d0d0d|Azul-marinho:#1c2a4a,"P,M,G,GG",FALSE,TRUE
+3,Jaqueta Jeans,jaqueta-jeans,outros,389.9,299.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Jaqueta+Jeans,Azul claro:#7391b5|Azul escuro:#2b3f5c,"P,M,G,GG",TRUE,FALSE
+4,Camiseta Premium,camiseta-premium,camisa,119.9,79.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Camiseta,Branco:#f2f2f0|Preto:#0d0d0d|Cinza:#8a8a85,"P,M,G,GG",FALSE,FALSE
+5,Blazer Slim,blazer-slim,outros,549.9,419.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Blazer,Preto:#0d0d0d|Azul-marinho:#1c2a4a,"P,M,G,GG",TRUE,FALSE
+6,Polo Piquet,polo-piquet,camisa,159.9,109.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Polo,Branco:#f2f2f0|Preto:#0d0d0d|Verde:#3d5c42,"P,M,G,GG",FALSE,FALSE
+7,Bermuda Sarja,bermuda-sarja,bermuda,149.9,99.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Bermuda,Bege:#c9b48a|Preto:#0d0d0d|Verde-militar:#4b5d3a,"P,M,G,GG",FALSE,TRUE
+8,Tênis Casual,tenis-casual,outros,429.9,329.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Tênis,Branco:#f2f2f0|Preto:#0d0d0d,"P,M,G,GG",FALSE,FALSE
+9,Cinto de Couro,cinto-de-couro,acessorios,99.9,69.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Cinto,Preto:#0d0d0d|Marrom:#5c3d24,Único,FALSE,FALSE
+10,Relógio Clássico,relogio-classico,acessorios,349.9,259.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Relógio,Prata:#c4c4c4|Dourado:#b8963f,Único,FALSE,FALSE
+11,Boné Aba Reta,bone-aba-reta,acessorios,89.9,59.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Boné,Preto:#0d0d0d|Bege:#c9b48a,Único,FALSE,FALSE
+12,Moletom Canguru,moletom-canguru,outros,259.9,189.9,https://placehold.co/600x800/0d0d0d/FFC107?text=Moletom,Cinza:#8a8a85|Preto:#0d0d0d,"P,M,G,GG",TRUE,FALSE

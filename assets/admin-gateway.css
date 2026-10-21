@@ -1,0 +1,8 @@
+* { box-sizing:border-box; }
+body { min-height:100vh; margin:0; display:grid; place-items:center; padding:20px; background:#090909; color:#f5f5f5; font-family:Arial,sans-serif; }
+.gateway { width:min(100%,520px); padding:32px; border:1px solid #292929; border-radius:12px; background:#151515; }
+.marca { margin:0 0 32px; letter-spacing:1.2px; font-weight:900; }
+.marca span { color:#ffc107; }
+h1 { margin:0 0 12px; font-size:30px; }
+#mensagem, .ajuda { color:#b5b5b5; line-height:1.55; }
+.botao { display:inline-block; margin-top:12px; padding:13px 18px; border-radius:6px; background:#ffc107; color:#111; font-weight:800; text-decoration:none; }

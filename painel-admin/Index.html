@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <base target="_top">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bessa Imports | Painel Admin</title>
+  <style>
+    :root { color-scheme: dark; --fundo:#090909; --cartao:#151515; --borda:#292929; --texto:#f5f5f5; --suave:#a5a5a5; --amarelo:#ffc107; --verde:#75d69c; --vermelho:#ff7777; }
+    * { box-sizing:border-box; }
+    body { margin:0; background:var(--fundo); color:var(--texto); font-family:Inter,Arial,sans-serif; }
+    .topo { border-bottom:1px solid var(--borda); padding:24px max(20px,calc((100% - 1180px)/2)); display:flex; align-items:center; justify-content:space-between; gap:18px; }
+    .marca { margin:0; font-size:18px; letter-spacing:1.2px; font-weight:900; }
+    .marca span { color:var(--amarelo); }
+    .topo p { margin:5px 0 0; color:var(--suave); font-size:13px; }
+    main { max-width:1180px; margin:0 auto; padding:28px 20px 60px; }
+    .intro { margin-bottom:22px; }
+    h1 { margin:0 0 8px; font-size:clamp(25px,4vw,36px); }
+    .intro p, .ajuda { color:var(--suave); line-height:1.55; }
+    .colunas { display:grid; grid-template-columns:minmax(0,1fr) minmax(0,1fr); gap:20px; align-items:start; }
+    .cartao { background:var(--cartao); border:1px solid var(--borda); border-radius:12px; padding:22px; }
+    h2 { margin:0 0 18px; font-size:19px; }
+    .campo { display:grid; gap:7px; margin-bottom:15px; }
+    .duas-colunas { display:grid; grid-template-columns:1fr 1fr; gap:14px; }
+    label { font-size:13px; font-weight:700; }
+    input, select, textarea { width:100%; border:1px solid #3a3a3a; border-radius:7px; background:#0e0e0e; color:var(--texto); padding:12px; font:inherit; }
+    input:focus, select:focus, textarea:focus { outline:2px solid var(--amarelo); outline-offset:1px; }
+    input[readonly] { color:#b8b8b8; }
+    textarea { min-height:100px; resize:vertical; }
+    .ajuda { margin:0; font-size:12px; }
+    .check-list { display:flex; gap:18px; flex-wrap:wrap; margin:4px 0 18px; }
+    .check { display:flex; align-items:center; gap:8px; color:var(--texto); }
+    .check input { width:17px; height:17px; accent-color:var(--amarelo); }
+    .botao { width:100%; border:0; border-radius:7px; padding:13px 16px; background:var(--amarelo); color:#111; font-weight:900; font-size:14px; cursor:pointer; }
+    .botao:disabled { opacity:.55; cursor:wait; }
+    .status { min-height:22px; margin:12px 0 0; font-size:13px; }
+    .status.ok { color:var(--verde); }
+    .status.erro { color:var(--vermelho); }
+    .lista { display:grid; gap:10px; max-height:700px; overflow:auto; }
+    .produto { display:flex; align-items:center; gap:12px; padding:10px; border:1px solid var(--borda); border-radius:8px; }
+    .produto img { width:52px; height:64px; object-fit:cover; border-radius:4px; background:#202020; }
+    .produto-info { min-width:0; flex:1; }
+    .produto-info strong { display:block; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+    .produto-info span { display:block; color:var(--suave); font-size:12px; margin-top:4px; }
+    .vazio { color:var(--suave); font-size:14px; }
+    .aviso { border-left:3px solid var(--amarelo); padding:10px 12px; margin-top:16px; background:#211c0b; color:#e9dfc2; font-size:12px; line-height:1.5; }
+    @media (max-width:850px) { .colunas { grid-template-columns:1fr; } .lista { max-height:none; } }
+    @media (max-width:560px) { .topo { align-items:flex-start; flex-direction:column; } main { padding-top:22px; } .cartao { padding:16px; } .duas-colunas { grid-template-columns:1fr; gap:0; } }
+  </style>
+</head>
+<body>
+  <header class="topo">
+    <div>
+      <p class="marca">BESSA <span>IMPORTS</span></p>
+      <p>Painel administrativo do catálogo</p>
+    </div>
+    <div id="contador" aria-live="polite"></div>
+  </header>
+  <main>
+    <section class="intro">
+      <h1>Adicionar uma peça</h1>
+      <p>Cadastre a foto, o preço e as variações. O catálogo da loja é atualizado pela planilha conectada.</p>
+    </section>
+
+    <div class="colunas">
+      <section class="cartao">
+        <h2>Dados da peça</h2>
+        <form id="formProduto">
+          <div class="campo">
+            <label for="nome">Nome</label>
+            <input id="nome" name="nome" required maxlength="100" autocomplete="off" placeholder="Ex.: Camisa de linho">
+          </div>
+
+          <div class="campo">
+            <label for="slug">Endereço da página</label>
+            <input id="slug" name="slug" readonly>
+            <p class="ajuda">Gerado a partir do nome da peça.</p>
+          </div>
+
+          <div class="campo">
+            <label for="categoria">Categoria</label>
+            <select id="categoria" name="categoria" required>
+              <option value="camisa">Camisa</option>
+              <option value="short">Short</option>
+              <option value="bermuda">Bermuda</option>
+              <option value="calca">Calça</option>
+              <option value="acessorios">Acessórios</option>
+              <option value="outros">Outros</option>
+            </select>
+          </div>
+
+          <div class="duas-colunas">
+            <div class="campo">
+              <label for="preco">Preço atual (R$)</label>
+              <input id="preco" name="preco" type="number" min="0" step="0.01" required placeholder="149,90">
+            </div>
+            <div class="campo">
+              <label for="precoAntigo">Preço anterior (opcional)</label>
+              <input id="precoAntigo" name="precoAntigo" type="number" min="0" step="0.01" placeholder="199,90">
+            </div>
+          </div>
+
+          <div class="campo">
+            <label for="img">Foto da peça</label>
+            <input id="img" name="img" type="text" inputmode="url" autocomplete="off" required placeholder="https://... ou /Bessa-Imports/assets/foto.jpg">
+            <p class="ajuda">Use um link público HTTPS da foto ou um arquivo dentro de /Bessa-Imports/assets/.</p>
+          </div>
+
+          <div class="campo">
+            <label for="cores">Cores disponíveis</label>
+            <textarea id="cores" name="cores" required placeholder="Preto:#0d0d0d&#10;Branco:#f2f2f0"></textarea>
+            <p class="ajuda">Uma cor por linha, no formato nome:#RRGGBB.</p>
+          </div>
+
+          <div class="campo">
+            <label for="tamanhos">Tamanhos</label>
+            <input id="tamanhos" name="tamanhos" required placeholder="P, M, G, GG">
+            <p class="ajuda">Separe por vírgulas. Para acessórios, use Único.</p>
+          </div>
+
+          <div class="check-list">
+            <label class="check"><input id="lancamento" type="checkbox"> Lançamento</label>
+            <label class="check"><input id="maisVendido" type="checkbox"> Mais vendido</label>
+          </div>
+
+          <button class="botao" id="salvar" type="submit">Cadastrar peça</button>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </form>
+      </section>
+
+      <section class="cartao">
+        <h2>Peças no catálogo</h2>
+        <div class="lista" id="listaProdutos"><p class="vazio">Carregando catálogo…</p></div>
+        <div class="aviso">Após cadastrar, a planilha pública pode levar alguns minutos para atualizar a loja. O painel é protegido pelo acesso à sua conta Google.</div>
+      </section>
+    </div>
+  </main>
+
+  <script>
+    function criarSlug(texto) {
+      return String(texto || '')
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLowerCase()
+        .replace(/[^a-z0-9]+/g, '-')
+        .replace(/^-+|-+$/g, '');
+    }
+
+    function mostrarStatus(texto, tipo) {
+      var status = document.getElementById('status');
+      status.textContent = texto || '';
+      status.className = 'status' + (tipo ? ' ' + tipo : '');
+    }
+
+    function atualizarLista(produtos) {
+      var lista = document.getElementById('listaProdutos');
+      var contador = document.getElementById('contador');
+      lista.textContent = '';
+      contador.textContent = produtos.length + (produtos.length === 1 ? ' peça' : ' peças');
+
+      if (!produtos.length) {
+        var vazio = document.createElement('p');
+        vazio.className = 'vazio';
+        vazio.textContent = 'Nenhuma peça cadastrada.';
+        lista.appendChild(vazio);
+        return;
+      }
+
+      produtos.forEach(function(produto) {
+        var linha = document.createElement('article');
+        linha.className = 'produto';
+
+        var imagem = document.createElement('img');
+        imagem.src = produto.img;
+        imagem.alt = '';
+        imagem.loading = 'lazy';
+
+        var info = document.createElement('div');
+        info.className = 'produto-info';
+
+        var nome = document.createElement('strong');
+        nome.textContent = produto.nome;
+
+        var detalhes = document.createElement('span');
+        detalhes.textContent = produto.categoria + ' · ' + Number(produto.preco).toLocaleString('pt-BR', { style:'currency', currency:'BRL' });
+
+        info.appendChild(nome);
+        info.appendChild(detalhes);
+        linha.appendChild(imagem);
+        linha.appendChild(info);
+        lista.appendChild(linha);
+      });
+    }
+
+    function carregarProdutos() {
+      document.getElementById('listaProdutos').textContent = 'Carregando catálogo…';
+      google.script.run
+        .withSuccessHandler(atualizarLista)
+        .withFailureHandler(function(erro) {
+          document.getElementById('listaProdutos').textContent = 'Não foi possível carregar o catálogo.';
+          mostrarStatus(erro && erro.message ? erro.message : 'Confira a planilha e tente de novo.', 'erro');
+        })
+        .listarProdutosAdmin();
+    }
+
+    document.getElementById('nome').addEventListener('input', function(evento) {
+      document.getElementById('slug').value = criarSlug(evento.target.value);
+    });
+
+    document.getElementById('formProduto').addEventListener('submit', function(evento) {
+      evento.preventDefault();
+      var form = evento.currentTarget;
+      if (!form.reportValidity()) return;
+
+      var botao = document.getElementById('salvar');
+      botao.disabled = true;
+      botao.textContent = 'Salvando…';
+      mostrarStatus('Salvando a peça na planilha…');
+
+      var dados = {
+        nome: document.getElementById('nome').value,
+        slug: document.getElementById('slug').value,
+        categoria: document.getElementById('categoria').value,
+        preco: document.getElementById('preco').value,
+        precoAntigo: document.getElementById('precoAntigo').value,
+        img: document.getElementById('img').value,
+        cores: document.getElementById('cores').value,
+        tamanhos: document.getElementById('tamanhos').value,
+        lancamento: document.getElementById('lancamento').checked,
+        maisVendido: document.getElementById('maisVendido').checked
+      };
+
+      google.script.run
+        .withSuccessHandler(function(resultado) {
+          mostrarStatus('Peça cadastrada com sucesso (código ' + resultado.id + '). Ela aparecerá na loja após a atualização do catálogo.', 'ok');
+          form.reset();
+          document.getElementById('slug').value = '';
+          botao.disabled = false;
+          botao.textContent = 'Cadastrar peça';
+          carregarProdutos();
+        })
+        .withFailureHandler(function(erro) {
+          mostrarStatus(erro && erro.message ? erro.message : 'Não foi possível salvar. Confira os dados e tente novamente.', 'erro');
+          botao.disabled = false;
+          botao.textContent = 'Cadastrar peça';
+        })
+        .adicionarProdutoAdmin(dados);
+    });
+
+    carregarProdutos();
+  </script>
+</body>
+</html>

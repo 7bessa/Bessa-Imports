@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Boné Aba Reta — Bessa Imports</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@600;700;800;900&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/Bessa-Imports/assets/style.css">
+</head>
+<body>
+<div id="pagina">
+<!-- ===== 1. Top bar ===== -->
+<div class="topbar">
+  🔥 10% OFF na primeira compra com o cupom <strong>BESSA10</strong> <span>|</span> Frete grátis acima de R$ 299
+</div>
+
+<!-- ===== 2. Header ===== -->
+<header>
+  <div class="header-inner">
+    <button class="hamburger" aria-label="Abrir menu" data-action="abrir-menu">
+      <svg viewBox="0 0 24 24"><line x1="3" y1="6" x2="21" y2="6"/><line x1="3" y1="12" x2="21" y2="12"/><line x1="3" y1="18" x2="21" y2="18"/></svg>
+    </button>
+    <a href="/Bessa-Imports/" class="logo">BESSA <span>IMPORTS</span></a>
+
+    <nav class="menu" id="menu">
+      <div class="menu-cabecalho">
+        <span>Menu</span>
+        <button class="menu-fechar" aria-label="Fechar menu" data-action="fechar-menu">
+          <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+        </button>
+      </div>
+      <form class="search-box search-box-mobile" action="/Bessa-Imports/busca.html" method="get" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" name="q" placeholder="Buscar produtos" aria-label="Buscar produtos">
+      </form>
+      <a href="/Bessa-Imports/#topo">Início</a>
+      <div class="menu-item-dropdown" id="categoriaDropdown">
+        <button class="menu-dropdown-toggle" type="button" aria-haspopup="true" aria-expanded="false" data-action="toggle-categoria">
+          Categoria
+          <svg class="chevron" viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+        </button>
+        <div class="submenu" id="submenuCategoria" role="menu">
+          <a href="/Bessa-Imports/categoria/camisa.html" role="menuitem">Camisa</a>
+          <a href="/Bessa-Imports/categoria/short.html" role="menuitem">Short</a>
+          <a href="/Bessa-Imports/categoria/bermuda.html" role="menuitem">Bermuda</a>
+          <a href="/Bessa-Imports/categoria/calca.html" role="menuitem">Calças</a>
+          <a href="/Bessa-Imports/categoria/acessorios.html" role="menuitem">Acessórios</a>
+        </div>
+      </div>
+      <a href="/Bessa-Imports/#novidades">Novidades</a>
+      <a href="/Bessa-Imports/#sobre">Sobre</a>
+      <a href="/Bessa-Imports/#contato">Contato</a>
+    </nav>
+    <!-- FIX: overlay escuro dedicado, fecha o menu ao ser clicado -->
+    <div class="menu-overlay" id="menuOverlay" data-action="fechar-menu"></div>
+
+    <div class="header-actions">
+      <form class="search-box" action="/Bessa-Imports/busca.html" method="get" role="search">
+        <svg viewBox="0 0 24 24"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+        <input type="text" name="q" placeholder="Buscar produtos" aria-label="Buscar produtos">
+      </form>
+      <button class="icon-btn" aria-label="Abrir carrinho" data-action="abrir-carrinho">
+        <svg viewBox="0 0 24 24"><circle cx="9" cy="21" r="1"/><circle cx="20" cy="21" r="1"/><path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/></svg>
+        <span class="cart-badge" id="cartBadge">0</span>
+      </button>
+    </div>
+  </div>
+</header>
+<!-- ===== Página do Produto ===== -->
+<section class="produto-pagina" id="produtoDetalhe" data-produto-slug="bone-aba-reta">
+  <p class="breadcrumb container">
+    <a href="/Bessa-Imports/">Início</a> /
+    <a href="/Bessa-Imports/categoria/acessorios.html" id="breadcrumbCategoria">Acessórios</a> /
+    <span id="breadcrumbNome">Boné Aba Reta</span>
+  </p>
+
+  <div class="produto-layout">
+    <div class="produto-galeria">
+      <div class="galeria-principal" id="galeriaPrincipal"></div>
+      <div class="galeria-miniaturas" id="galeriaMiniaturas"></div>
+    </div>
+
+    <div class="produto-detalhe-info">
+      <h1 class="produto-detalhe-nome" id="produtoDetalheNome"></h1>
+      <div class="produto-detalhe-precos">
+        <span class="preco-antigo" id="produtoDetalhePrecoAntigo"></span>
+        <span class="preco-atual" id="produtoDetalhePrecoAtual"></span>
+      </div>
+
+      <div class="selecao-grupo">
+        <div class="selecao-grupo-titulo">
+          <span>Tamanho</span>
+          <span class="valor-escolhido" id="valorTamanhoEscolhido"></span>
+        </div>
+        <div class="tamanhos-opcoes" id="tamanhosOpcoes"></div>
+      </div>
+
+      <div class="selecao-grupo">
+        <div class="selecao-grupo-titulo">
+          <span>Cor</span>
+          <span class="valor-escolhido" id="valorCorEscolhida"></span>
+        </div>
+        <div class="cores-opcoes" id="coresOpcoes"></div>
+      </div>
+
+      <button class="btn-comprar-grande" data-action="adicionar-com-opcoes">Adicionar ao Carrinho</button>
+      <div class="erro-selecao" id="erroSelecao"></div>
+
+      <p class="produto-detalhe-desc">Aba reta estruturada e ajuste traseiro. Streetwear básico que combina com tudo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ===== 10. Rodapé ===== -->
+<footer id="contato">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-col">
+        <h4>BESSA IMPORTS</h4>
+        <p>Bessa Imports Comércio de Roupas Ltda. — CNPJ 00.000.000/0001-00</p>
+        <div class="footer-social">
+          <a href="#" aria-label="Instagram"><svg viewBox="0 0 24 24"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><line x1="17.5" y1="6.5" x2="17.5" y2="6.5"/></svg></a>
+          <a href="#" aria-label="WhatsApp"><svg viewBox="0 0 24 24"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/></svg></a>
+          <a href="#" aria-label="Facebook"><svg viewBox="0 0 24 24"><path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z"/></svg></a>
+        </div>
+      </div>
+      <div class="footer-col">
+        <h4>Loja</h4>
+        <ul>
+          <li><a href="/Bessa-Imports/#loja">Todos os produtos</a></li>
+          <li><a href="/Bessa-Imports/#novidades">Novidades</a></li>
+          <li><a href="#">Ofertas</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Ajuda</h4>
+        <ul>
+          <li><a href="#">Trocas e devoluções</a></li>
+          <li><a href="#">Formas de pagamento</a></li>
+          <li><a href="#">Rastrear pedido</a></li>
+        </ul>
+      </div>
+      <div class="footer-col">
+        <h4>Empresa</h4>
+        <ul>
+          <li><a href="/Bessa-Imports/#sobre">Sobre nós</a></li>
+          <li><a href="/Bessa-Imports/#contato">Contato</a></li>
+          <li><a href="#">Trabalhe conosco</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Bessa Imports. Todos os direitos reservados.</span>
+      <span>Pedidos finalizados pelo WhatsApp.</span>
+    </div>
+  </div>
+</footer>
+</div>
+<!-- ===== Carrinho (drawer) ===== -->
+<div class="overlay" id="overlayCarrinho" data-action="fechar-carrinho"></div>
+<aside class="drawer" id="drawerCarrinho" aria-label="Carrinho de compras">
+  <div class="drawer-header">
+    <h3>Seu carrinho</h3>
+    <button class="drawer-fechar" aria-label="Fechar carrinho" data-action="fechar-carrinho">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="frete-gratis-box" id="freteGratisBox" class="oculto">
+    <p id="freteGratisTexto"></p>
+    <div class="frete-gratis-barra"><div class="frete-gratis-progresso" id="freteGratisProgresso"></div></div>
+  </div>
+  <div class="drawer-body" id="drawerBody"></div>
+  <div class="drawer-footer" id="drawerFooter" class="oculto">
+    <div class="cupom-box">
+      <label for="inputCupom" class="sr-only">Cupom de desconto</label>
+      <input type="text" id="inputCupom" placeholder="Cupom de desconto" aria-label="Cupom de desconto">
+      <button class="btn btn-secundario" data-action="aplicar-cupom">Aplicar</button>
+    </div>
+    <div class="cupom-msg" id="cupomMsg"></div>
+    <div class="resumo-linha"><span>Subtotal</span><span id="resSubtotal">R$ 0,00</span></div>
+    <div class="resumo-linha" id="linhaDesconto" class="oculto"><span>Desconto</span><span id="resDesconto">- R$ 0,00</span></div>
+    <div class="resumo-linha total"><span>Total</span><span id="resTotal">R$ 0,00</span></div>
+    <button class="btn btn-primario btn-full btn-finalizar" data-action="abrir-checkout">Finalizar pelo WhatsApp</button>
+  </div>
+</aside>
+<!-- ===== Modal Checkout ===== -->
+<div class="modal-overlay" id="modalOverlay">
+  <div class="modal" role="dialog" aria-modal="true" aria-label="Finalizar pedido">
+    <div class="modal-header">
+      <h3 id="modalTitulo">Finalizar pedido</h3>
+      <button aria-label="Fechar" data-action="fechar-checkout">
+        <svg class="icone-fechar" viewBox="0 0 24 24" width="20" height="20"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <div class="modal-body" id="modalBody">
+
+      <form id="formCheckout" novalidate>
+        <div class="form-secao-titulo">Dados pessoais</div>
+        <div class="form-grupo">
+          <label for="nome">Nome completo</label>
+          <input type="text" id="nome" required>
+          <div class="erro-msg" id="erroNome">Informe seu nome completo</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-grupo">
+            <label for="email">E-mail</label>
+            <input type="email" id="email" required>
+            <div class="erro-msg" id="erroEmail">Informe um e-mail válido</div>
+          </div>
+          <div class="form-grupo">
+            <label for="telefone">Telefone</label>
+            <input type="tel" id="telefone" required placeholder="(00) 00000-0000">
+            <div class="erro-msg" id="erroTelefone">Informe um telefone</div>
+          </div>
+        </div>
+
+        <div class="form-secao-titulo">Endereço de entrega</div>
+        <div class="form-grid">
+          <div class="form-grupo">
+            <label for="cep">CEP</label>
+            <input type="text" id="cep" required placeholder="00000-000">
+            <div class="erro-msg" id="erroCep">Informe o CEP</div>
+          </div>
+          <div class="form-grupo">
+            <label for="numero">Número</label>
+            <input type="text" id="numero" required>
+            <div class="erro-msg" id="erroNumero">Informe o número</div>
+          </div>
+        </div>
+        <div class="form-grupo">
+          <label for="endereco">Endereço</label>
+          <input type="text" id="endereco" required>
+          <div class="erro-msg" id="erroEndereco">Informe o endereço</div>
+        </div>
+        <div class="form-grid">
+          <div class="form-grupo">
+            <label for="cidade">Cidade</label>
+            <input type="text" id="cidade" required>
+            <div class="erro-msg" id="erroCidade">Informe a cidade</div>
+          </div>
+          <div class="form-grupo">
+            <label for="estado">Estado</label>
+            <input type="text" id="estado" required maxlength="2" placeholder="UF">
+            <div class="erro-msg" id="erroEstado">Informe o estado</div>
+          </div>
+        </div>
+
+        <div class="form-secao-titulo">Pagamento</div>
+        <div class="pagamento-opcoes">
+          <label class="pagamento-opcao">
+            <input type="radio" name="pagamento" value="pix" checked>
+            <svg viewBox="0 0 24 24"><path d="M12 2 2 12l10 10 10-10z"/></svg>
+            <span>Pix</span>
+          </label>
+          <label class="pagamento-opcao">
+            <input type="radio" name="pagamento" value="cartao">
+            <svg viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+            <span>Cartão</span>
+          </label>
+          <label class="pagamento-opcao">
+            <input type="radio" name="pagamento" value="boleto">
+            <svg viewBox="0 0 24 24"><line x1="4" y1="4" x2="4" y2="20"/><line x1="8" y1="4" x2="8" y2="20"/><line x1="12" y1="4" x2="12" y2="20"/><line x1="16" y1="4" x2="16" y2="20"/><line x1="20" y1="4" x2="20" y2="20"/></svg>
+            <span>Boleto</span>
+          </label>
+        </div>
+
+        <div class="resumo-pedido" id="resumoPedido"></div>
+
+        <button type="submit" class="btn btn-primario btn-full btn-confirmar-pedido">Confirmar pedido</button>
+      </form>
+
+    </div>
+  </div>
+</div>
+<!-- ===== Popup 10% OFF ===== -->
+<div class="popup-overlay" id="popupOverlay">
+  <div class="popup">
+    <button class="popup-fechar" aria-label="Fechar popup" data-action="fechar-popup">
+      <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <h3>10% OFF pra você</h3>
+    <p>Use o cupom abaixo na primeira compra</p>
+    <div class="cupom-destaque">BESSA10</div>
+    <p>Válido no carrinho, sem valor mínimo</p>
+  </div>
+</div>
+<!-- ===== Toast ===== -->
+<div class="toast" id="toast">
+  <svg viewBox="0 0 24 24"><polyline points="20 6 9 17 4 12"/></svg>
+  <span id="toastTexto">Produto adicionado!</span>
+</div>
+<!-- ===== Botão flutuante do WhatsApp ===== -->
+<a
+  href="https://wa.me/5562995718537?text=Ol%C3%A1%2C%20vim%20pelo%20site%20e%20gostaria%20de%20mais%20informa%C3%A7%C3%B5es"
+  target="_blank" rel="noopener noreferrer"
+  class="whatsapp-flutuante"
+  aria-label="Falar no WhatsApp"
+>
+  <svg viewBox="0 0 32 32" xmlns="http://www.w3.org/2000/svg">
+    <path d="M16.004 2.667c-7.36 0-13.334 5.973-13.334 13.333 0 2.351.615 4.646 1.784 6.666L2.667 29.333l6.83-1.762a13.27 13.27 0 0 0 6.507 1.706h.006c7.36 0 13.333-5.973 13.333-13.333S23.364 2.667 16.004 2.667zm7.822 18.836c-.335.94-1.656 1.72-2.703 1.945-.719.153-1.657.276-4.816-1.035-4.043-1.676-6.646-5.789-6.848-6.058-.194-.269-1.635-2.177-1.635-4.154s1.02-2.947 1.382-3.35c.335-.372.732-.464.977-.464.244 0 .49.002.702.013.226.012.53-.086.828.63.335.803 1.135 2.78 1.234 2.982.1.202.166.44.033.71-.132.27-.199.44-.4.672-.201.235-.424.523-.605.702-.201.199-.41.415-.176.816.234.4 1.04 1.72 2.234 2.786 1.535 1.371 2.83 1.798 3.234 1.998.404.202.641.169.878-.101.238-.269 1.005-1.172 1.274-1.573.269-.4.538-.336.907-.202.372.135 2.35 1.107 2.753 1.309.404.202.673.303.771.472.101.169.101.976-.234 1.917z"/>
+  </svg>
+</a>
+<script src="/Bessa-Imports/assets/site.js"></script>
+</body>
+</html>
